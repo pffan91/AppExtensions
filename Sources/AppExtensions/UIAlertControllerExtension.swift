@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIAlertController {
+public extension UIAlertController {
 
     static func message(_ message: String, title: String = "", closeTitle: String, showCopyAction: Bool = false, copyTitle: String, parent: UIViewController? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

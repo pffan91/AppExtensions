@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-extension UIViewController {
+public extension UIViewController {
 
     static var current: UIViewController? {
         UIApplication.shared.currentWindow?.rootViewController?.current
@@ -91,7 +91,7 @@ extension UIViewController {
     }
 }
 
-extension UIViewController {
+public extension UIViewController {
     /// heightPadding is a magic constant. Tweak it for pixel perfect height of views. Why it needed? Looks like UIKit can not correctly check and apply padding of root's view. If root view will be withut padding - everything is ok. Need to find another solution or fix.
     static func calculateHeight<Content: View>(for view: Content, width: CGFloat, heightPadding: CGFloat = 12) -> CGFloat {
         let hostingController = UIHostingController(rootView: view)

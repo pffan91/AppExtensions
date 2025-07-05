@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIApplication {
+public extension UIApplication {
 
     var currentWindow: UIWindow? {
         connectedScenes

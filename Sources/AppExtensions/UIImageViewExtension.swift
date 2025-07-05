@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIImageView {
+public extension UIImageView {
 
     func loadImageAsync(from urlString: String, placeholder: UIImage? = nil) async {
         // Display placeholder image if provided
@@ -68,6 +68,6 @@ extension UIImageView {
     }
 }
 
-enum ImageStyle: Int {
+public enum ImageStyle: Int {
     case squared, rounded
 }

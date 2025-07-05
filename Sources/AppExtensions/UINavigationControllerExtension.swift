@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UINavigationController {
+public extension UINavigationController {
     func popToRootViewController(animated: Bool, completion: @escaping () -> Void) {
         guard !viewControllers.isEmpty else { completion(); return }
         CATransaction.begin()

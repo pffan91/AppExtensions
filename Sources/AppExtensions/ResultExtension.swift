@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension Result where Success == Void {
+public extension Result where Success == Void {
     static var success: Result { .success(()) }
 }
 
-typealias ResultCallback<T> = (Result<T, Error>) -> Void
+public typealias ResultCallback<T> = (Result<T, Error>) -> Void

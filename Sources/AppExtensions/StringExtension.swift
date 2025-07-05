@@ -8,7 +8,7 @@
 import UIKit
 import CryptoKit
 
-extension String {
+public extension String {
 
     func toBool() -> Bool {
         switch self.lowercased() {
@@ -196,14 +196,14 @@ extension String {
 /// Custom Optionals to String interpolation
 infix operator ???: NilCoalescingPrecedence
 
-func ???<T> (optional: T?, defaultValue: @autoclosure () -> String) -> String {
+public func ???<T> (optional: T?, defaultValue: @autoclosure () -> String) -> String {
     switch optional {
     case let value?: return String(describing: value)
     case nil: return defaultValue()
     }
 }
 
-extension NSAttributedString {
+public extension NSAttributedString {
     static func partiallyBoldText(_ regular: String, bold: String, regularFont: UIFont, boldFont: UIFont, foregroundColor: UIColor) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: regular, attributes: [.font: regularFont, .foregroundColor: foregroundColor])
         let boldAttributedString = NSMutableAttributedString(string: bold, attributes: [.font: boldFont, .foregroundColor: foregroundColor])

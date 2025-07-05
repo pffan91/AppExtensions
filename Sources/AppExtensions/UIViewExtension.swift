@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
 
     /// Extension method: Superview of specific type
     func superview<T>(ofType: T.Type) -> T? {
@@ -273,7 +273,7 @@ extension UIView {
     }
 }
 
-extension UIView {
+public extension UIView {
 
     var igLeftAnchor: NSLayoutXAxisAnchor {
         if #available(iOS 11.0, *) {

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension Array {
+public extension Array {
 
     subscript(safe index: Index) -> Element? {
         indices.contains(index) ? self[index] : nil
@@ -22,7 +22,7 @@ extension Array {
     }
 }
 
-extension Array where Element: Identifiable {
+public extension Array where Element: Identifiable {
 
     subscript(id: Element.ID) -> Element? {
         get { first { $0.id == id } }
@@ -49,7 +49,7 @@ extension Array where Element: Identifiable {
     }
 }
 
-extension Array {
+public extension Array {
     func sortedArrayByPosition() -> [Element] {
         return sorted(by: { (obj1 : Element, obj2 : Element) -> Bool in
 

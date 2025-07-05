@@ -7,9 +7,9 @@
 
 import Combine
 
-typealias Cancellables = Set<AnyCancellable>
+public typealias Cancellables = Set<AnyCancellable>
 
-extension Publisher where Failure == Never {
+public extension Publisher where Failure == Never {
 
     /// Assigns each element from a Publisher to a property on an object, but avoids retian cycle if object holds cancellable for this Subscriber.
     ///

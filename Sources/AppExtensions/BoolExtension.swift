@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Bool {
+public extension Bool {
     func toString() -> String {
         return self ? "on" : "off"
     }

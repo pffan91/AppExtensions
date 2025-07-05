@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Notification.Name {
+public extension Notification.Name {
 
     func post(object: Any? = nil, userInfo: [AnyHashable: Any]? = nil) {
         DispatchQueue.main.async {
@@ -28,10 +28,10 @@ extension Notification.Name {
     }
 }
 
-extension Notification {
+public extension Notification {
 
-    static let uuidKey = "UUID"
-    static let errorKey = "Error"
+    public static let uuidKey = "UUID"
+    public static let errorKey = "Error"
 
     func contains(_ id: UUID) -> Bool {
         (userInfo?[Notification.uuidKey] as? UUID) == id

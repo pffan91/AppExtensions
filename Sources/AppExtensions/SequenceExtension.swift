@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Sequence {
+public extension Sequence {
 
     /// Extension method
     func first<T>(_ neededType: T.Type) -> T? {
@@ -15,7 +15,7 @@ extension Sequence {
     }
 }
 
-extension Sequence where Iterator.Element: Hashable {
+public extension Sequence where Iterator.Element: Hashable {
 
     /// Extension method
     func unique() -> [Iterator.Element] {

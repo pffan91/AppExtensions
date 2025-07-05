@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URLRequest {
+public extension URLRequest {
     /// Returns a best-effort cURL representation of this URLRequest.
     func asCurlCommand() -> String {
         guard let url = self.url else { return "curl command could not be created" }

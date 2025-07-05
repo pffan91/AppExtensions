@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension CGFloat {
+public extension CGFloat {
     static var onePixel: CGFloat {
         return 1 / UIScreen.main.nativeScale
     }
@@ -15,15 +15,15 @@ extension CGFloat {
     func scale(by textStyle: UIFont.TextStyle) -> CGFloat { UIFontMetrics(forTextStyle: textStyle).scaledValue(for: self) }
 }
 
-extension Double {
+public extension Double {
     func scale(by textStyle: UIFont.TextStyle) -> CGFloat { UIFontMetrics(forTextStyle: textStyle).scaledValue(for: CGFloat(self)) }
 }
 
-extension Int {
+public extension Int {
     func scale(by textStyle: UIFont.TextStyle) -> CGFloat { UIFontMetrics(forTextStyle: textStyle).scaledValue(for: CGFloat(self)) }
 }
 
-extension CGRect {
+public extension CGRect {
 
     var center: CGPoint {
         get { return CGPoint(x: origin.x + width / 2, y: origin.y + height / 2) }

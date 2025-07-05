@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
 
     /// Creates a UIColor from a hex string, with an option to use sRGB or Display P3.
     ///
@@ -66,7 +66,7 @@ extension UIColor {
     }
 }
 
-extension UIColor {
+public extension UIColor {
     class func rgb(from hex: Int, alpha: CGFloat = 1.0) -> UIColor {
         let red = CGFloat((hex & 0xFF0000) >> 16) / 0xFF
         let green = CGFloat((hex & 0x00FF00) >> 8) / 0xFF

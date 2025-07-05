@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
 
     static let empty: UIImage = .empty()
 
@@ -64,26 +64,26 @@ extension UIImage {
     }
 }
 
-extension UIImage.Configuration {
+public extension UIImage.Configuration {
     /// Symbol image configuration with small scale
-    static let smallSymbol = UIImage.SymbolConfiguration(scale: .small)
+    public static let smallSymbol = UIImage.SymbolConfiguration(scale: .small)
     /// Symbol image configuration with medium scale
-    static let mediumSymbol = UIImage.SymbolConfiguration(scale: .medium)
+    public static let mediumSymbol = UIImage.SymbolConfiguration(scale: .medium)
     /// Symbol image configuration with large scale
-    static let largeSymbol = UIImage.SymbolConfiguration(scale: .large)
+    public static let largeSymbol = UIImage.SymbolConfiguration(scale: .large)
     /// Symbol image configuration with light weight
-    static let lightSymbol = UIImage.SymbolConfiguration(weight: .light)
+    public static let lightSymbol = UIImage.SymbolConfiguration(weight: .light)
     /// Symbol image configuration with small scale and light weight
-    static let smallLightSymbol = UIImage.SymbolConfiguration.smallSymbol.applying(.lightSymbol)
+    public static let smallLightSymbol = UIImage.SymbolConfiguration.smallSymbol.applying(.lightSymbol)
     /// Symbol image configuration with medium scale and light weight
-    static let mediumLightSymbol = UIImage.SymbolConfiguration.mediumSymbol.applying(.lightSymbol)
+    public static let mediumLightSymbol = UIImage.SymbolConfiguration.mediumSymbol.applying(.lightSymbol)
     /// Symbol image configuration with large scale and light weight
-    static let largeLightSymbol = UIImage.SymbolConfiguration.largeSymbol.applying(.lightSymbol)
+    public static let largeLightSymbol = UIImage.SymbolConfiguration.largeSymbol.applying(.lightSymbol)
 
-    static let defaultSymbol = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17))
+    public static let defaultSymbol = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 17))
 }
 
-extension UIImageView {
+public extension UIImageView {
 
     func roundCornersForAspectFit(radius: CGFloat) {
         guard let image = self.image else { return }
