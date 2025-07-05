@@ -1,6 +1,6 @@
 //
 //  UIImageExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 26/10/2024.
 //

@@ -1,6 +1,6 @@
 //
 //  UIViewExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 26/10/2024.
 //
@@ -66,7 +66,7 @@ extension UIView {
         self.layer.shadowRadius = 0.0
     }
 
-    func setShadow(color: UIColor = AppTheme.current.gray160, shadowOffset: CGSize = CGSize(width: 0, height: 1.0), shadowOpacity: Float = 0.4, shadowRadius: CGFloat = 3) {
+    func setShadow(color: UIColor, shadowOffset: CGSize = CGSize(width: 0, height: 1.0), shadowOpacity: Float = 0.4, shadowRadius: CGFloat = 3) {
         layer.masksToBounds = false
         layer.shadowColor = color.cgColor
         layer.shadowOffset = shadowOffset

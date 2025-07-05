@@ -1,6 +1,6 @@
 //
 //  UIAlertControllerExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 26/10/2024.
 //
@@ -9,10 +9,10 @@ import UIKit
 
 extension UIAlertController {
 
-    static func message(_ message: String, title: String = "", closeTitle: String = l10n.action.close, showCopyAction: Bool = false, parent: UIViewController? = nil, completion: Action? = nil) {
+    static func message(_ message: String, title: String = "", closeTitle: String, showCopyAction: Bool = false, copyTitle: String, parent: UIViewController? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if showCopyAction {
-            alert.addAction(UIAlertAction(title: l10n.action.copy, style: .default) { _ in
+            alert.addAction(UIAlertAction(title: copyTitle, style: .default) { _ in
                 UIPasteboard.general.string = message
                 completion?()
             })
@@ -29,7 +29,7 @@ extension UIAlertController {
         }
     }
 
-    static func confirm(_ message: String, title: String = "", parent: UIViewController? = nil, cancelTitle: String = l10n.action.cancel, cancelAction: Action? = nil, confirmTitle: String, preferredStyle: UIAlertController.Style = .alert, confirmStyle: UIAlertAction.Style = .default, confirmAction: @escaping Action) {
+    static func confirm(_ message: String, title: String = "", parent: UIViewController? = nil, cancelTitle: String, cancelAction: (() -> Void)? = nil, confirmTitle: String, preferredStyle: UIAlertController.Style = .alert, confirmStyle: UIAlertAction.Style = .default, confirmAction: @escaping (() -> Void)) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel) { _ in
             cancelAction?()
@@ -47,7 +47,7 @@ extension UIAlertController {
         }
     }
 
-    static func textfield(_ parent: UIViewController? = nil, title: String = "", message: String? = nil, placeholder: String, initialText: String? = nil, doneTitle: String, doneHandler: @escaping (String) -> Void) {
+    static func textfield(_ parent: UIViewController? = nil, title: String = "", message: String? = nil, placeholder: String, initialText: String? = nil, doneTitle: String, cancelTitle: String, doneHandler: @escaping (String) -> Void) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.font = .systemFont(ofSize: 17)
@@ -59,7 +59,7 @@ extension UIAlertController {
             textField.keyboardAppearance = .light
             textField.text = initialText
         }
-        alert.addAction(UIAlertAction(title: l10n.action.cancel, style: .cancel))
+        alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel))
         let doneAction = UIAlertAction(title: doneTitle, style: .default) { [unowned alert] action in
             doneHandler(alert.textFields?.first?.text ?? "")
         }

@@ -1,6 +1,6 @@
 //
 //  CGExtensions.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 22/11/2024.
 //

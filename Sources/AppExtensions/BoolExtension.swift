@@ -1,6 +1,6 @@
 //
 //  BoolExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 18/01/2025.
 //

@@ -1,6 +1,6 @@
 //
 //  UIColorExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 12/01/2025.
 //

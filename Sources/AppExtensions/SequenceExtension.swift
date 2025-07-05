@@ -1,6 +1,6 @@
 //
 //  SequenceExtension.swift
-//  TopDrive
+//  AppExtensions
 //
 //  Created by Vladyslav Semenchenko on 24/05/2025.
 //
