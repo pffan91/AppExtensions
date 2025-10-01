@@ -31,6 +31,10 @@ public extension String {
         }.reduce("") { $0 + String($1) }
     }
 
+    var urlEncoded: String? {
+        return addingPercentEncoding(withAllowedCharacters: CharacterSet.init(charactersIn: "`#%^{}\"[]|\\<> ").inverted)
+    }
+
     /// Extension property
     var localized: String {
         NSLocalizedString(self, value: "!\(self)?", comment: "")
