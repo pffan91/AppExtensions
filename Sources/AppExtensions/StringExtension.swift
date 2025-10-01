@@ -7,6 +7,7 @@
 
 import UIKit
 import CryptoKit
+import Foundation
 
 public extension String {
 
@@ -16,6 +17,18 @@ public extension String {
         case "false", "no", "0", "off": false
         default: false
         }
+    }
+
+    /// Replaces all non-alphanumeric characters (except '-' and '_') with '-'.
+    var sanitizedForPayload: String {
+        let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-"))
+        return self.map { char in
+            if let scalar = char.unicodeScalars.first, allowed.contains(scalar) {
+                return char
+            } else {
+                return "-"
+            }
+        }.reduce("") { $0 + String($1) }
     }
 
     /// Extension property
