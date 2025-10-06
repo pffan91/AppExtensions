@@ -19,6 +19,20 @@ public extension String {
         }
     }
 
+    var toEng: String {
+        [
+            "У": "Y", "К": "K", "Е": "E", "Н": "H", "Х": "X", "А": "A", "Р": "P",
+            "О": "O", "С": "C", "Т": "T", "В": "B", "М": "M", "І": "I"
+        ].reduce(uppercased()) { $0.replacingOccurrences(of: $1.key, with: $1.value) }.clean // ?
+    }
+
+    var toUkr: String {
+        [
+            "A": "А", "T": "Т", "B": "В", "I": "І", "E": "Е", "M": "М",
+            "K": "К", "O": "О", "H": "Н", "X": "Х", "P": "Р", "C": "С"
+        ].reduce(uppercased()) { $0.replacingOccurrences(of: $1.key, with: $1.value) }
+    }
+
     /// Replaces O/o with 0 for VIN/license plate processing
     var replaceToZero: String {
         return self.replacingOccurrences(of: "O", with: "0")
