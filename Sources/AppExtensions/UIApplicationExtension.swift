@@ -16,6 +16,10 @@ public extension UIApplication {
             .filter({ $0.isKeyWindow }).first
     }
 
+    var activeWindow: UIWindow? {
+        windows.first { $0.isKeyWindow } ?? windows.first
+    }
+
     class func topViewController(controller: UIViewController? = UIApplication.shared.currentWindow?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
@@ -29,5 +33,18 @@ public extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
+    }
+
+    var icon: UIImage? {
+        guard let iconsDictionary = Bundle.main.infoDictionary?["CFBundleIcons"] as? NSDictionary,
+              let primaryIconsDictionary = iconsDictionary["CFBundlePrimaryIcon"] as? NSDictionary,
+              let iconFiles = primaryIconsDictionary["CFBundleIconFiles"] as? NSArray,
+              // First will be smallest for the device class, last will be the largest for device class
+              let lastIcon = iconFiles.lastObject as? String,
+              let icon = UIImage(named: lastIcon) else {
+            return nil
+        }
+
+        return icon
     }
 }

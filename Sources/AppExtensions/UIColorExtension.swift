@@ -67,10 +67,51 @@ public extension UIColor {
 }
 
 public extension UIColor {
+
+    // MARK: - Additional Initializers
+
+    /// Initialize from RGB components (0-255)
+    public convenience init(r: Int, g: Int, b: Int, a: CGFloat = 1) {
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: a)
+    }
+
+    /// Initialize from integer RGB value (e.g., 0xFF0000 for red)
+    public convenience init(_ rgb: Int, a: CGFloat = 1) {
+        self.init(r: (rgb >> 16) & 0xFF, g: (rgb >> 8) & 0xFF, b: rgb & 0xFF, a: a)
+    }
+
     class func rgb(from hex: Int, alpha: CGFloat = 1.0) -> UIColor {
         let red = CGFloat((hex & 0xFF0000) >> 16) / 0xFF
         let green = CGFloat((hex & 0x00FF00) >> 8) / 0xFF
         let blue = CGFloat(hex & 0x0000FF) / 0xFF
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+
+    // MARK: - Hex String Conversion
+
+    /// Convert to hex string (e.g., "#FF0000")
+    public var hexString: String {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: nil)
+        return [r, g, b].map { String(format: "%02lX", Int($0 * 255)) }.reduce("#", +)
+    }
+
+    // MARK: - Alpha Modifier
+
+    /// Shortcut for alpha modifier
+    public func alpha(_ value: CGFloat) -> UIColor {
+        withAlphaComponent(value)
+    }
+
+    // MARK: - Image Generation
+
+    /// Generate a UIImage filled with this color
+    public func image(with size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
+        defer { UIGraphicsEndImageContext() }
+        let rect = CGRect(origin: CGPoint(), size: size)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        self.setFill()
+        UIRectFill(rect)
+        return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }

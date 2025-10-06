@@ -9,6 +9,18 @@ import UIKit
 
 public extension UIView {
 
+    // MARK: - View Hierarchy
+
+    func findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
+
     /// Extension method: Superview of specific type
     func superview<T>(ofType: T.Type) -> T? {
         var view: UIView? = self
@@ -24,6 +36,22 @@ public extension UIView {
     /// Extension method: Subview of specific type
     func subview<T>(ofType type: T.Type) -> T? {
         return subviews.compactMap { $0 as? T ?? $0.subview(ofType: type) }.first
+    }
+
+    // MARK: - NIB Loading
+
+    private class func with<T: UIView>(nibName: String, owner: Any? = nil) -> T {
+        if let nib = UINib(nibName: nibName, bundle: nil)
+            .instantiate(withOwner: owner, options: nil)
+            .first as? T {
+            return nib
+        }
+        fatalError("nib \(nibName) not found")
+    }
+
+    class func nib(_ nibName: String? = nil, owner: Any? = nil) -> Self {
+        let nibName = nibName ?? String(describing: self)
+        return with(nibName: nibName, owner: owner)
     }
 
     // MARK: - Debug
@@ -66,12 +94,41 @@ public extension UIView {
         self.layer.shadowRadius = 0.0
     }
 
-    func setShadow(color: UIColor, shadowOffset: CGSize = CGSize(width: 0, height: 1.0), shadowOpacity: Float = 0.4, shadowRadius: CGFloat = 3) {
+    func setShadow(color: UIColor = .gray, shadowOffset: CGSize = CGSize(width: 0, height: 1.0), shadowOpacity: Float = 0.4, shadowRadius: CGFloat = 3) {
         layer.masksToBounds = false
         layer.shadowColor = color.cgColor
         layer.shadowOffset = shadowOffset
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = shadowRadius
+    }
+
+    // MARK: - Corner Rounding
+
+    func addTopRoundedCorner(radius: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topLeft, .topRight],
+                                     cornerRadii: CGSize(width: radius, height: radius))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = bounds
+        maskLayer.path = maskPath.cgPath
+        layer.mask = maskLayer
+    }
+
+    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+
+    /// Apply gradient to view
+    func applyGradient(colors: [UIColor], locations: [NSNumber]?) {
+        layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.locations = locations
+        layer.insertSublayer(gradientLayer, at: 0)
     }
 
     func addBlurEffect(style: UIBlurEffect.Style = .systemMaterialDark) {
@@ -99,7 +156,20 @@ public extension UIView {
         UIApplication.shared.sendAction(#selector(resignFirstResponder), to: nil, from: nil, for: nil)    // or view.endEditing(true)
     }
 
-    // MARK: - Screenshot
+    // MARK: - Screenshots
+
+    func snapshot() -> UIImage? {
+        if #available(iOS 14, *) {
+            let imageData = UIGraphicsImageRenderer(size: bounds.size).jpegData(withCompressionQuality: 0.5) { _ in
+                drawHierarchy(in: bounds, afterScreenUpdates: false)
+            }
+            return UIImage(data: imageData)
+        } else {
+            return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+                drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: false)
+            }
+        }
+    }
 
     func takeScreenshot(scale: CGFloat = UIScreen.main.scale) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
@@ -275,6 +345,64 @@ public extension UIView {
 
 public extension UIView {
 
+    // MARK: - Frame Shortcuts
+
+    var top: CGFloat {
+        get {
+            return self.frame.minY
+        }
+        set {
+            self.frame = CGRect(x: self.frame.minX, y: newValue, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    var bottom: CGFloat {
+        get {
+            return self.frame.maxY
+        }
+        set {
+            self.frame = CGRect(x: self.frame.minX, y: newValue - self.frame.height, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    var left: CGFloat {
+        get {
+            return self.frame.minX
+        }
+        set {
+            self.frame = CGRect(x: newValue, y: self.frame.minY, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    var right: CGFloat {
+        get {
+            return self.frame.maxX
+        }
+        set {
+            self.frame = CGRect(x: newValue - self.frame.width, y: self.frame.minY, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    var centerY: CGFloat {
+        get {
+            return self.frame.minY + self.frame.height / 2
+        }
+        set {
+            self.frame = CGRect(x: self.frame.minX, y: newValue - self.frame.height / 2, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    var centerX: CGFloat {
+        get {
+            return self.frame.minX + self.frame.width / 2
+        }
+        set {
+            self.frame = CGRect(x: newValue - self.frame.width / 2, y: self.frame.minY, width: self.frame.width, height: self.frame.height)
+        }
+    }
+
+    // MARK: - Safe Area Anchors
+
     var igLeftAnchor: NSLayoutXAxisAnchor {
         if #available(iOS 11.0, *) {
             return self.safeAreaLayoutGuide.leftAnchor
@@ -323,4 +451,8 @@ public extension UIView {
         }
         return frame.height
     }
+
+    // MARK: - Reuse Identifier
+
+    static var reuseId: String { "\(self)".reuseId }
 }

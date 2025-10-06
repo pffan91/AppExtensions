@@ -70,3 +70,102 @@ public extension UIAlertController {
         }
     }
 }
+
+public typealias Alert = UIAlertController
+
+public extension Alert {
+    static func show(error: Error, onOK: (() -> Void)? = nil) {
+        let alert = Alert(error: error)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            onOK?()
+        }))
+        alert.show()
+    }
+
+    static func show(text: String, onOK: (() -> Void)? = nil) {
+        let alert = Alert(alert: text)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            onOK?()
+        }))
+
+        alert.show()
+    }
+
+    static func show(text: String, title: String, onOK: (() -> Void)? = nil) {
+        let alert = Alert(alert: text, title: title)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            onOK?()
+        }))
+
+        alert.show()
+    }
+
+    static func show(text: String, title: String, okText: String, onOK: (() -> Void)? = nil) {
+        let alert = Alert(alert: text, title: title)
+        alert.addAction(UIAlertAction(title: okText, style: .default, handler: { (_) in
+            onOK?()
+        }))
+
+        alert.show()
+    }
+}
+
+public extension UIAlertController {
+
+    convenience init(alert: String?,
+                     preferredStyle: UIAlertController.Style = .alert,
+                     actions: String ...) {
+        self.init(title: nil,
+                  message: alert,
+                  preferredStyle: preferredStyle)
+
+        actions.forEach { self.addAction(UIAlertAction(title: $0,
+                                                       style: .default)) }
+    }
+
+    convenience init(alert: String?, title: String?,
+                     preferredStyle: UIAlertController.Style = .alert,
+                     actions: String ...) {
+        self.init(title: title,
+                  message: alert,
+                  preferredStyle: preferredStyle)
+
+        actions.forEach { self.addAction(UIAlertAction(title: $0,
+                                                       style: .default)) }
+    }
+
+    convenience init(error: Error?) {
+        let alert: String?
+
+        alert = error?.localizedDescription
+
+        self.init(alert: alert, title: "")
+    }
+
+    func show() {
+        if let controller = topController() {
+            controller.present(self, animated: true)
+        }
+    }
+
+    @discardableResult func addAction(title: String?,
+                                      style: UIAlertAction.Style = .default,
+                                      handler: ((UIAlertAction) -> Void)? = nil) -> Alert {
+        self.addAction(UIAlertAction(title: title,
+                                     style: style,
+                                     handler: handler))
+        return self
+    }
+
+    func addTextField() -> Alert {
+        self.addTextField(configurationHandler: nil)
+        return self
+    }
+}
+
+private func topController(base: UIViewController? = UIApplication.shared.activeWindow?.rootViewController) -> UIViewController? {
+    guard let next = (base as? UINavigationController)?.visibleViewController
+            ?? (base as? UITabBarController)?.selectedViewController
+            ?? base?.presentedViewController else { return base }
+    return topController(base: next)
+}

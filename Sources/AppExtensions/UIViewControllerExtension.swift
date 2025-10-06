@@ -72,7 +72,7 @@ public extension UIViewController {
         navigationController?.view.endEditing(true)
     }
 
-    func changeRootViewController(with viewController: UIViewController, 
+    func changeRootViewController(with viewController: UIViewController,
                                   animated: Bool = true,
                                   duration: TimeInterval = 0.3,
                                   completion: ((Bool) -> Void)? = nil) {
@@ -88,6 +88,24 @@ public extension UIViewController {
             window.rootViewController = viewController
             completion?(true)
         }
+    }
+
+    func dismissAllViewControllers(animated: Bool, completion: (() -> Void)? = nil) {
+        if let presentingViewController = self.presentingViewController {
+            var rootViewController = presentingViewController
+            while let nextPresenting = rootViewController.presentingViewController {
+                rootViewController = nextPresenting
+            }
+            rootViewController.dismiss(animated: animated, completion: completion)
+        } else {
+            completion?()
+        }
+    }
+
+    /// Re-enables swipe-to-back gesture after setting custom leftBarButtonItem
+    func enableSwipeToBack() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }
 

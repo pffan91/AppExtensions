@@ -19,6 +19,14 @@ public extension String {
         }
     }
 
+    /// Replaces O/o with 0 for VIN/license plate processing
+    var replaceToZero: String {
+        return self.replacingOccurrences(of: "O", with: "0")
+            .replacingOccurrences(of: "o", with: "0")
+            .replacingOccurrences(of: "О", with: "0")
+            .replacingOccurrences(of: "о", with: "0")
+    }
+
     /// Replaces all non-alphanumeric characters (except '-' and '_') with '-'.
     var sanitizedForPayload: String {
         let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-"))
@@ -38,6 +46,11 @@ public extension String {
     /// Extension property
     var localized: String {
         NSLocalizedString(self, value: "!\(self)?", comment: "")
+    }
+
+    /// Localize from specific table
+    func localized(from table: String) -> String {
+        NSLocalizedString(self, tableName: table, bundle: .main, value: "!\(self)?", comment: "")
     }
 
     /// Extension method
@@ -137,6 +150,11 @@ public extension String {
         )
     }
 
+    /// Convert string to NSMutableAttributedString
+    public var attributed: NSMutableAttributedString {
+        NSMutableAttributedString(string: self)
+    }
+
     // MARK: -
 
     /// Generates *CGSize* for string within provided width to fit in. Uses System Font.
@@ -205,6 +223,79 @@ public extension String {
         let end = index(start, offsetBy: range.upperBound - range.lowerBound)
         return String(self[start ..< end])
     }
+
+    // MARK: - Additional Utilities
+
+    var length: Int {
+        return count
+    }
+
+    var isAlphanumeric: Bool {
+        guard !isEmpty else {
+            return false
+        }
+        let allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        let characterSet = CharacterSet(charactersIn: allowed)
+        guard rangeOfCharacter(from: characterSet.inverted) == nil else {
+            return false
+        }
+        return true
+    }
+
+    func cleanString() -> String {
+        let notAllowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        let characterSet = CharacterSet(charactersIn: notAllowed).inverted
+        return self.trimmingCharacters(in: characterSet)
+    }
+
+    var url: URL? {
+        addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap(URL.init(string:))
+    }
+
+    var intValue: Int {
+        Int(self) ?? 0
+    }
+
+    var floatValue: Float {
+        Float(self) ?? 0
+    }
+
+    var clean: String {
+        components(separatedBy: .whitespacesAndNewlines).joined()
+    }
+
+    var cleanDate: String {
+        replacingOccurrences(of: "T00:00Z", with: "")
+    }
+
+    func convertToDictionary() -> [String: Any]? {
+        if let data = data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+        return ceil(boundingBox.width)
+    }
+
+    var toData: Data {
+        return Data(self.utf8)
+    }
+
+    var reuseId: String { self }
 }
 
 // MARK: - Optionals to String interpolation
