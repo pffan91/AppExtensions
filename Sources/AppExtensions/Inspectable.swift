@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 // swiftlint:disable:next all
-extension UIView {
+public extension UIView {
     
     @IBInspectable var borderWidth: CGFloat {
         get { layer.borderWidth }

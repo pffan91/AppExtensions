@@ -47,18 +47,18 @@ public struct UserDefault<Value: PropertyListValue> {
 
 public protocol PropertyListValue {}
 
-extension Data: PropertyListValue {}
-extension String: PropertyListValue {}
-extension Date: PropertyListValue {}
-extension Bool: PropertyListValue {}
-extension Int: PropertyListValue {}
-extension Double: PropertyListValue {}
-extension Float: PropertyListValue {}
+public extension Data: PropertyListValue {}
+public extension String: PropertyListValue {}
+public extension Date: PropertyListValue {}
+public extension Bool: PropertyListValue {}
+public extension Int: PropertyListValue {}
+public extension Double: PropertyListValue {}
+public extension Float: PropertyListValue {}
 
-extension Array: PropertyListValue where Element: PropertyListValue {}
-extension Dictionary: PropertyListValue where Key == String, Value: PropertyListValue {}
+public extension Array: PropertyListValue where Element: PropertyListValue {}
+public extension Dictionary: PropertyListValue where Key == String, Value: PropertyListValue {}
 
-extension Optional: PropertyListValue where Wrapped: PropertyListValue {}
+public extension Optional: PropertyListValue where Wrapped: PropertyListValue {}
 
 
 fileprivate protocol OptionalProtocol {

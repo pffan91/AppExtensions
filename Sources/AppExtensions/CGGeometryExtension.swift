@@ -57,7 +57,7 @@ public func + (l: CGSize, r: UIEdgeInsets) -> CGSize {
 
 // MARK: - CGRect Extensions
 
-extension CGRect {
+public extension CGRect {
 
     public func inset(by d: CGFloat) -> CGRect {
         insetBy(dx: d, dy: d)
@@ -80,7 +80,7 @@ public func + (l: CGRect, r: CGPoint) -> CGRect {
 
 // MARK: - UIEdgeInsets Extensions
 
-extension UIEdgeInsets {
+public extension UIEdgeInsets {
 
     public static func top(_ value: CGFloat) -> UIEdgeInsets {
         UIEdgeInsets(top: value, left: 0, bottom: 0, right: 0)
@@ -115,7 +115,7 @@ public func + (l: UIEdgeInsets, r: UIEdgeInsets) -> UIEdgeInsets {
 
 // MARK: - CGAffineTransform Extensions
 
-extension CGAffineTransform {
+public extension CGAffineTransform {
 
     public init(from: CGRect, to: CGRect) {
         self = CGAffineTransform(translationX: to.midX - from.midX, y: to.midY - from.midY)

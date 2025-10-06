@@ -9,7 +9,7 @@ import UIKit
 
 public typealias AttributedString = NSMutableAttributedString
 
-extension AttributedString {
+public extension AttributedString {
 
     // MARK: - Initialization
 
@@ -97,7 +97,7 @@ public func + (l: AttributedString, r: AttributedString) -> AttributedString {
 
 // MARK: - NSAttributedString Extensions
 
-extension NSAttributedString {
+public extension NSAttributedString {
 
     public var mutable: AttributedString {
         AttributedString(attributedString: self)
@@ -106,7 +106,7 @@ extension NSAttributedString {
 
 // MARK: - NSString Extensions
 
-extension NSString {
+public extension NSString {
 
     public func ranges(of substring: String) -> [NSRange] {
         var ranges: [NSRange] = []

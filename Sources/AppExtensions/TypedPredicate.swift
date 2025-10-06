@@ -67,7 +67,7 @@ fileprivate extension TypedComparisonPredicate {
     }
 }
 
-extension Sequence {
+public extension Sequence {
     public func filter<P: TypedPredicate>(_ predicate: P) -> [Element] where P.Root == Element {
         filter(predicate.evaluate)
     }

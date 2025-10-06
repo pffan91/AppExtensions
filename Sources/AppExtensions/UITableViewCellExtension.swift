@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITableViewCell {
+public extension UITableViewCell {
     
     class func registerNib(to tableView: UITableView) {
         let name = String(describing: self)

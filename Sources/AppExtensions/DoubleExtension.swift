@@ -9,7 +9,7 @@ import Foundation
 
 // Bytes
 
-extension Double {
+public extension Double {
     public var KB: Int {
         Int(self * 1024)
     }
@@ -23,7 +23,7 @@ extension Double {
 
 // TimeInterval
 
-extension Double {
+public extension Double {
     public var seconds: TimeInterval {
         self
     }

@@ -13,7 +13,7 @@ public struct DecodableError: LocalizedError {
     }
 }
 
-extension Decodable {
+public extension Decodable {
     public static func from(json: String) throws -> Self {
         let data = json.data(using: .utf8, allowLossyConversion: false) ?? Data()
         let decoder = JSONDecoder()

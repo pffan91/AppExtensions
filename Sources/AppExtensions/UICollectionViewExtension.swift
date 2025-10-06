@@ -21,7 +21,7 @@ public enum ReusableViewKind {
     }
 }
 
-extension UICollectionView {
+public extension UICollectionView {
 
     // MARK: - Type-Safe Cell Registration & Dequeuing
 

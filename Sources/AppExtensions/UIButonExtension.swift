@@ -9,7 +9,7 @@
 import UIKit
 
 // TODO: Wrong solution, need to refactor !!!
-extension UIButton {
+public extension UIButton {
     fileprivate struct AssociatedKey {
         static var pdfURL = "pdfURL"
     }
@@ -24,7 +24,7 @@ extension UIButton {
     }
 }
 
-extension UIButton {
+public extension UIButton {
     func addSpacingBetweenTitleAndEdges(spacing: CGFloat) {
         contentEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
     }

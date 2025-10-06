@@ -5,7 +5,7 @@
 
 import UIKit
 
-extension UITableView {
+public extension UITableView {
 
     // MARK: - Scrolling
 
