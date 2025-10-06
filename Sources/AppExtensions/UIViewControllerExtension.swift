@@ -91,15 +91,14 @@ public extension UIViewController {
     }
 
     func dismissAllViewControllers(animated: Bool, completion: (() -> Void)? = nil) {
-        if let presentingViewController = self.presentingViewController {
-            var rootViewController = presentingViewController
-            while let nextPresenting = rootViewController.presentingViewController {
-                rootViewController = nextPresenting
-            }
-            rootViewController.dismiss(animated: animated, completion: completion)
-        } else {
-            completion?()
+        // Find the root presenting view controller
+        var rootViewController = self
+        while let presenting = rootViewController.presentingViewController {
+            rootViewController = presenting
         }
+
+        // Dismiss from the root, which will dismiss all presented view controllers
+        rootViewController.dismiss(animated: animated, completion: completion)
     }
 
     /// Re-enables swipe-to-back gesture after setting custom leftBarButtonItem
